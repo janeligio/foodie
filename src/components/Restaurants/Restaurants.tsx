@@ -41,7 +41,7 @@ function Restaurant(props:any) {
                 <img className="restaurant-image" src={data.image_url} alt={`${data.name} thumbnail`} />
             </div>    
             <div className="restaurant-body">
-                <h1 className="name">{data.name} <small>{Math.round((data.distance/1000) * 100) / 100}km</small></h1>
+                <h1 className="name">{data.name} <small>{metersToMiles(data.distance)}</small></h1>
                 <div className="" style={{display:'flex'}}>
                     <div style={{flex:1}}>
                         <div>
@@ -108,4 +108,10 @@ function Category(props: any) {
     return (
         <span className="category">{name}</span>
     );
+}
+
+function metersToMiles(meters: number): string {
+    const km = meters/1000;
+    const mi = km * 0.62137119223733;
+    return `${Math.round(mi * 10) / 10} mi`
 }
