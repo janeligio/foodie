@@ -5,7 +5,7 @@ import  { FaHome, FaStar, FaStarHalf, FaDollarSign, FaYelp } from 'react-icons/f
 
 export default function Restaurants(props:any) {
     const [index, setIndex] = useState(0);
-    const {restaurants, setView} = props;
+    const {restaurants, setView, getAllRestaurants} = props;
     
     function nextIndex() {
         if(restaurants && (index+1) < restaurants.length) {
@@ -14,6 +14,11 @@ export default function Restaurants(props:any) {
     }
     function isLast():boolean {
         return index === (restaurants.length-1);
+    }
+    function nextRestaurants() {
+        // Query API with offset
+        getAllRestaurants();
+        setIndex(0);
     }
     return (
         <div className="restaurant-container">
@@ -24,7 +29,8 @@ export default function Restaurants(props:any) {
                 data={restaurants[index]} 
                 nextIndex={nextIndex} 
                 isLast={isLast()}
-                setView={setView}/>}
+                nextRestaurants={nextRestaurants}
+                />}
         </div>
     );
 }
@@ -33,8 +39,8 @@ function Restaurant(props:any) {
     const data: Eatery = props.data;
     const nextIndex = props.nextIndex;
     const isLast = props.isLast;
-    const setView = props.setView;
-    const handler = !isLast ? nextIndex : () => setView('Home');
+    const nextRestaurants = props.nextRestaurants;
+    const handler = !isLast ? nextIndex : () => nextRestaurants();
     return (
         <div className="restaurant">
             <div onClick={handler} className="restaurant-thumbnail">
@@ -73,7 +79,7 @@ function Rating(props: any) {
         }
         const half = props.rating % 1 !== 0;
         return (<>{stars.map(() => {
-            return (<FaStar color="gold"/>);
+            return (<FaStar key={Math.random()} color="gold"/>);
         })}{half && <FaStarHalf color="gold"/>}</>);
     } else {
         return null;
@@ -87,7 +93,7 @@ function PriceRange(props: any) {
         for(let i = 0; i < priceStr.length; i++) {
             price.push(1);
         }
-        return (<>{price.map(() => <FaDollarSign color="green"/>)}</>);
+        return (<>{price.map(() => <FaDollarSign key={Math.random()} color="green"/>)}</>);
     } else {
         return null;
     }
