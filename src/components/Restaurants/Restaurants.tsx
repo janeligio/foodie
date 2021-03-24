@@ -47,20 +47,28 @@ function Restaurant(props:any) {
                 <img className="restaurant-image" src={data.image_url} alt={`${data.name} thumbnail`} />
             </div>    
             <div className="restaurant-body">
-                <h1 className="name">{data.name} <small>{metersToMiles(data.distance)}</small></h1>
-                <div className="" style={{display:'flex'}}>
-                    <div style={{flex:1}}>
-                        <div>
+                <h1 className="name">{data.name} <small className="distance">{metersToMiles(data.distance)}</small></h1>
+                <div className="" style={{}}>
+                    <div style={{display:'flex', marginTop: '0.2em'}}>
+                        <div style={{flex:1}}>
                             <Rating rating={data.rating}/>
+                            <div>
+                                <PriceRange price={data.price}/>
+                            </div>
                         </div>
-                        <PriceRange price={data.price}/>
-                    </div>
-                    <div className="" style={{flex:3}}>
-                        <p style={{margin:0}}>
-                            {data.location.display_address.join(' ')} <br/>
-                            <a href={`tel:${data.phone}`}>{data.display_phone}</a><br/>
+                        <address className="no-italics" style={{flex:1}}>
                             <a className="yelp" href={`${data.url}`}>Yelp <FaYelp color="white"/></a>
-                        </p>
+                                <br/>
+                            <a className="bussiness-info" href={`tel:${data.phone}`}>{data.display_phone}</a><br/>
+
+                        </address>
+                    </div>
+                    <div className="" style={{}}>
+                        <address className="no-italics" style={{margin:0}}>
+                            <a className="bussiness-info" href={`http://maps.google.com/?q=${data.location.display_address.join(' ')}`}>
+                                {data.location.display_address.join(' ')}
+                            </a>
+                        </address>
                     </div>
                 </div>
                 <div className="categories">
@@ -112,7 +120,7 @@ function Categories(props: any) {
 function Category(props: any) {
     const name = props.name;
     return (
-        <span className="category">{name}</span>
+        <div className="category">{name}</div>
     );
 }
 

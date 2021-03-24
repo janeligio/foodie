@@ -41,6 +41,17 @@ button:hover, button:focus {
     padding: 1em;
 }
 
+button[disabled=disabled], button:disabled {
+  cursor: not-allowed;
+  color: #C0C0C0;
+  background-color: #FFF;
+}
+.disabled-button:hover{
+  cursor: not-allowed;
+  background-color: #EEE;
+
+}
+
 .actions {
   margin-bottom: 1em;
   display: flex;
@@ -53,6 +64,13 @@ button:hover, button:focus {
   flex-direction: row;
   align-items: center;
 }
+.actions.try-harder {
+  flex-direction: column;
+}
+
+.no-italics {
+  font-style: normal;
+}
 .restaurant-container {
   background-color: #282c34;
   padding-top: 1em;
@@ -64,8 +82,7 @@ button:hover, button:focus {
 .restaurant {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   background-color: white;
-  width:60vw;
-
+  max-width:80vw;
 }
 .restaurant-thumbnail {
   opacity: 1;
@@ -78,7 +95,7 @@ button:hover, button:focus {
   cursor: pointer;
 }
 .restaurant-image {
-  width: 60vw;
+  max-width: 80vw;
   margin:0;
   padding:0;
 }
@@ -95,7 +112,10 @@ button:hover, button:focus {
 }
 
 .categories {
-  padding: 0.5em 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0.5em 0 0.25em 0;
   /* display: flex;
   flex-direction: row;
   align-items: center;
@@ -105,12 +125,33 @@ button:hover, button:focus {
   background-color: #282c34;
   padding: 0.25em 0.5em;
   border-radius: 5px;
+  margin-top: 5px;
+  margin-left: 3px;
   color: white;
-  margin-left:5px;
   font-size: 0.75em;
 }
 .category:nth-child(1) {
   margin-left:0;
+}
+.distance {
+  white-space: pre;
+}
+a {
+  color: black;
+}
+a:link {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  opacity: 0.75;
+
+}
+a:active {
+  text-decoration: underline;
 }
 .yelp {
   background-color: red;
@@ -122,11 +163,15 @@ button:hover, button:focus {
   text-decoration: none;
   font-size: bold;
 }
-.yelp:hover {
+.yelp:hover, .yelp:focus {
   opacity: 0.75;
+  text-decoration: none;
 }
 .yelp:visited {
   text-decoration: none;
+}
+.bussiness-info:hover {
+  text-decoration: underline;
 }
 
 .bordered {

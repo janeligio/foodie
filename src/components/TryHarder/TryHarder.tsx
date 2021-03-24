@@ -10,7 +10,7 @@ export default function TryHarder(props: any) {
             return (<p>Looks like most places are closed right now.</p>);
         }
         if(offset === total) {
-
+            // TODO
         }
         return (<p>Something went wrong.</p>);
     }
@@ -18,10 +18,10 @@ export default function TryHarder(props: any) {
         <div className="home try-harder">
             <h1>Foodie</h1>
             <Message/>
+            <button style={{padding: '0.5em'}} className="actions" onClick={() => setView('Home')}>Back</button>
             <div className="actions">
-                <button className="" onClick={() => setView('Home')}>Back</button>
-                <button style={{marginLeft:'0.5em'}} onClick={() => getAllRestaurants(false, true)}>Try Harder</button>
-                <button style={{marginLeft:'0.5em'}} onClick={() => getAllRestaurants(true)}>View Closed Restaurants</button>
+                <button style={{padding: '0.5em'}} onClick={() => getAllRestaurants(false, true)}>Try Harder</button>
+                <button style={{padding: '0.5em', marginLeft:'0.5em'}} onClick={() => getAllRestaurants(true)}>View Closed</button>
             </div>
         </div>
     );

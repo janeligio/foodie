@@ -5,12 +5,15 @@ import QueryParameters from './types/QueryParameters';
 import Restaurants from './components/Restaurants/Restaurants';
 import TryHarder from './components/TryHarder/TryHarder';
 import Home from './components/Home/Home';
+import LocationServices from './components/Home/LocationServices';
+import Loader from './components/Loader/Loader';
 import axios from 'axios';
 import './App.css';
 
 const location = navigator.geolocation;
 
 function App(): JSX.Element {
+    const [loading, setLoading] = useState<boolean>(true);
     const [position, setPosition] = useState<any>();
     const [restaurants, setRestaurants] = useState<Eatery[]>();
     const [offset, setOffset] = useState<number>(0);
@@ -27,22 +30,12 @@ function App(): JSX.Element {
                 console.log(`code:${err.code} ${err.message}`);
             });
         } else {
-        }  
+        }
+        setLoading(false);
     },[])
 
-    function getCoordinates() {
-        if(location) {
-            location.getCurrentPosition((position: GeolocationPosition) => {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                setPosition([latitude,longitude]);
-                console.log('yo')
-            });
-        }
-        console.log('fuck')
-    }
-
     function getAllRestaurants(notOpen: boolean|undefined, harder: boolean|undefined) {
+        setLoading(true);
         if(position) {
             console.log(`Coords: ${position[0]},${position[1]}`);
 
@@ -65,40 +58,44 @@ function App(): JSX.Element {
             }).then(res => {
                 console.log(res.data);
                 setOffset(res.data.offset);
-                setRestaurants(res.data.businesses);
                 if(res.data.total > 0) {
+                    setRestaurants(res.data.businesses);
                     setView('Restaurants');
                 } else {
                     setTotal(res.data.total);
                     setView('Try Harder');
                 }
+                setLoading(false);
             }).catch(err => {
                 console.log(err);
+                setLoading(false);
             })
         }
     }
     return (
 	<>
 	<main>
-        { view === 'Home' &&
-                (
-                    position 
-                    ? <Home getAllRestaurants={getAllRestaurants}/>
-                    : <LocationServicesButton getCurrentLocation={getCoordinates}/>
-                )      
+        {
+            loading ? <Loader/> :
+            <>
+                { view === 'Home' &&
+                        (
+                            position 
+                            ? <Home getAllRestaurants={getAllRestaurants}/>
+                            : <LocationServices/>
+                        )      
+                }
+                { view === 'Try Harder' &&
+                    <TryHarder getAllRestaurants={getAllRestaurants} setView={setView} total={total} offset={offset}/>}
+                { view === 'Restaurants' &&
+                    <Restaurants restaurants={restaurants} setView={setView} getAllRestaurants={getAllRestaurants}/>
+                }
+            </>
         }
-        { view === 'Try Harder' &&
-            <TryHarder getAllRestaurants={getAllRestaurants} setView={setView} total={total} offset={offset}/>}
-        { view === 'Restaurants' &&
-            <Restaurants restaurants={restaurants} setView={setView} getAllRestaurants={getAllRestaurants}/>
-        }
+
 	</main>
 	</>
     );
-}
-
-function LocationServicesButton(props: any) {
-    return (<button onClick={() => props.getCurrentLocation()}>Enable Location Services</button>);
 }
 
 export default App;
