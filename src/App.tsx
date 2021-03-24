@@ -10,7 +10,6 @@ import './App.css';
 
 const location = navigator.geolocation;
 
-
 function App(): JSX.Element {
     const [position, setPosition] = useState<any>();
     const [restaurants, setRestaurants] = useState<Eatery[]>();
@@ -62,7 +61,7 @@ function App(): JSX.Element {
             }
             axios({
                 method:'get',
-                url: `http://localhost:8080/foodie?${queryParams}`,
+                url: `${process.env.REACT_APP_SERVER_API}/foodie?${queryParams}`,
             }).then(res => {
                 console.log(res.data);
                 setOffset(res.data.offset);
