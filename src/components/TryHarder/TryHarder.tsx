@@ -21,7 +21,7 @@ export default function TryHarder(props: any) {
             <button style={{padding: '0.5em'}} className="actions" onClick={() => setView('Home')}>Back</button>
             <div className="actions">
                 <button style={{padding: '0.5em'}} onClick={() => getAllRestaurants(false, true)}>Try Harder</button>
-                <button style={{padding: '0.5em', marginLeft:'0.5em'}} onClick={() => getAllRestaurants(true)}>View Closed</button>
+                <button style={{padding: '0.5em', marginLeft:'0.5em'}} onClick={() => getAllRestaurants(true)}>Explore</button>
             </div>
         </div>
     );

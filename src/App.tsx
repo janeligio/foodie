@@ -15,6 +15,8 @@ const location = navigator.geolocation;
 function App(): JSX.Element {
     const [loading, setLoading] = useState<boolean>(true);
     const [position, setPosition] = useState<any>();
+    const [address, setAddress] = useState<string>('');
+    const [foodType, setFoodType] = useState<string>('');
     const [restaurants, setRestaurants] = useState<Eatery[]>();
     const [offset, setOffset] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
@@ -34,16 +36,18 @@ function App(): JSX.Element {
         setLoading(false);
     },[])
 
-    function getAllRestaurants(notOpen: boolean|undefined, harder: boolean|undefined) {
+    function getAllRestaurants(notOpen: boolean|undefined, harder: boolean|undefined, food:string|undefined) {
         setLoading(true);
         if(position) {
             console.log(`Coords: ${position[0]},${position[1]}`);
 
-            const open_now = notOpen ? false : true;
-            const tryHarder = harder ? true : false;
+            let open_now = notOpen ? false : true;
+            let tryHarder = harder ? true : false;
+
             const queries: QueryParameters = {
                 lat: position[0],
                 lng: position[1],
+                address,
                 offset,
                 open_now,
                 harder: tryHarder
@@ -52,9 +56,63 @@ function App(): JSX.Element {
             for(const [key, value] of Object.entries(queries)) {
                 queryParams += `${key}=${value}&`;
             }
+            let category;
+            if(food) {
+                category = food;
+                setFoodType(food);
+            } else if(foodType) {
+                category = foodType;
+            } else {
+                category = 'dessert';
+            }
+
             axios({
                 method:'get',
-                url: `${process.env.REACT_APP_SERVER_API}/foodie?${queryParams}`,
+                url: `${process.env.REACT_APP_SERVER_API}/foodie/${category}?${queryParams}`,
+            }).then(res => {
+                console.log(res.data);
+                setOffset(res.data.offset);
+                if(res.data.total > 0) {
+                    setRestaurants(res.data.businesses);
+                    setView('Restaurants');
+                } else {
+                    setTotal(res.data.total);
+                    setView('Try Harder');
+                }
+                setLoading(false);
+            }).catch(err => {
+                console.log(err);
+                setLoading(false);
+            })
+        } else if(address) {
+            let open_now = notOpen ? false : true;
+            let tryHarder = harder ? true : false;
+
+            const queries: QueryParameters = {
+                lat: '',
+                lng: '',
+                address,
+                offset,
+                open_now,
+                harder: tryHarder
+            };
+            let queryParams = '';
+            for(const [key, value] of Object.entries(queries)) {
+                queryParams += `${key}=${value}&`;
+            }
+            let category;
+            if(food) {
+                category = food;
+                setFoodType(food);
+            } else if(foodType) {
+                category = foodType;
+            } else {
+                category = 'dessert';
+            }
+
+            axios({
+                method:'get',
+                url: `${process.env.REACT_APP_SERVER_API}/foodie/${category}?${queryParams}`,
             }).then(res => {
                 console.log(res.data);
                 setOffset(res.data.offset);
@@ -82,7 +140,7 @@ function App(): JSX.Element {
                         (
                             position 
                             ? <Home getAllRestaurants={getAllRestaurants}/>
-                            : <LocationServices/>
+                            : <LocationServices address={address} setAddress={setAddress} getAllRestaurants={getAllRestaurants}/>
                         )      
                 }
                 { view === 'Try Harder' &&
