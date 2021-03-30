@@ -3,6 +3,7 @@ import Eatery from '../../types/Eatery';
 import CategoryType from '../../types/Category';
 import  { FaStar, FaStarHalf, FaDollarSign, FaYelp } from 'react-icons/fa';
 import { BiArrowBack } from 'react-icons/bi';
+import { MdNavigateNext } from 'react-icons/md';
 
 export default function Restaurants(props:any) {
     const [index, setIndex] = useState(0);
@@ -47,6 +48,7 @@ function Restaurant(props:any) {
         <div className="restaurant">
             <div onClick={handler} className="restaurant-thumbnail">
                 <img className="restaurant-image" src={data.image_url} alt={`${data.name} thumbnail`} />
+                <MdNavigateNext size="2em" className="next-button"/>
             </div>    
             <div className="restaurant-body">
                 <h1 className="name">{data.name} <small className="distance">{metersToMiles(data.distance)}</small></h1>
@@ -92,7 +94,7 @@ function Rating(props: any) {
             <div>
                 {stars.map(() => <FaStar key={Math.random()} color="gold"/>)}
                 {half && <FaStarHalf color="gold"/>}
-                <span style={{fontSize:'0.75em'}}>({props.reviews})</span>
+                <span style={{fontSize:'0.75em', fontWeight:100}}>({props.reviews})</span>
             </div>);
     } else {
         return null;

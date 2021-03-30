@@ -6,7 +6,6 @@ header {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  
 }
 
 main {
@@ -87,6 +86,7 @@ button[disabled=disabled], button:disabled {
   max-width:80vw;
 }
 .restaurant-thumbnail {
+  position: relative;
   opacity: 1;
   transition: opacity .25s ease-in-out;
   -moz-transition: opacity .25s ease-in-out;
@@ -98,6 +98,7 @@ button[disabled=disabled], button:disabled {
 }
 .restaurant-image {
   max-width: 80vw;
+  width: 100%;
   margin:0;
   padding:0;
 }
@@ -113,6 +114,18 @@ button[disabled=disabled], button:disabled {
   font-size: .5em;
 }
 
+.next-button {
+  position:absolute;
+  top: 50%;
+  right: 15px;
+  /* transition: background-color 1s ease 1s; */
+  /* transition: <property> <duration> <timing-function> <delay>; */
+}
+.next-button:hover {
+  background-color: #7ea3d5;
+  color: white;
+  border-radius: 50%;
+}
 .categories {
   display: flex;
   flex-wrap: wrap;
