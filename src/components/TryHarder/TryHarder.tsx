@@ -1,4 +1,4 @@
-import { BiArrowBack } from 'react-icons/bi';
+import { BiArrowBack, BiSearchAlt } from 'react-icons/bi';
 
 export default function TryHarder(props: any) {
     const getAllRestaurants = props.getAllRestaurants;
@@ -23,7 +23,10 @@ export default function TryHarder(props: any) {
             <Message/>
             <div className="actions">
                 <button style={{ marginLeft:'0.25em'}} onClick={() => getAllRestaurants(false, true)}>Try Harder</button>
-                <button style={{ marginLeft:'0.25em'}} onClick={() => getAllRestaurants(true)}>Explore</button>
+                <button style={{ marginLeft:'0.25em', paddingRight:'1.5em'}} onClick={() => getAllRestaurants(true)}>
+                    <BiSearchAlt size="1em" style={{marginRight:'0.25em'}}/>
+                    Explore
+                </button>
             </div>
         </div>
         </>
