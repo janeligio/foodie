@@ -1,7 +1,8 @@
 import {useState} from 'react';
 import Eatery from '../../types/Eatery';
 import CategoryType from '../../types/Category';
-import  { FaHome, FaStar, FaStarHalf, FaDollarSign, FaYelp } from 'react-icons/fa';
+import  { FaStar, FaStarHalf, FaDollarSign, FaYelp } from 'react-icons/fa';
+import { BiArrowBack } from 'react-icons/bi';
 
 export default function Restaurants(props:any) {
     const [index, setIndex] = useState(0);
@@ -20,18 +21,19 @@ export default function Restaurants(props:any) {
         getAllRestaurants();
         setIndex(0);
     }
-    return (
+    return (<>
+        <button className="home-button" onClick={() => setView('Home')}><BiArrowBack size="2em"/></button>
         <div className="restaurant-container">
-            <div className="actions">
+            {/* <div className="actions">
                 <button className="" onClick={() => setView('Home')}><FaHome/></button>
-            </div>
+            </div> */}
             {restaurants && <Restaurant 
                 data={restaurants[index]} 
                 nextIndex={nextIndex} 
                 isLast={isLast()}
                 nextRestaurants={nextRestaurants}
                 />}
-        </div>
+        </div></>
     );
 }
 
@@ -51,7 +53,7 @@ function Restaurant(props:any) {
                 <div className="" style={{}}>
                     <div style={{display:'flex', marginTop: '0.2em'}}>
                         <div style={{flex:1}}>
-                            <Rating rating={data.rating}/>
+                            <Rating rating={data.rating} reviews={data.review_count}/>
                             <div>
                                 <PriceRange price={data.price}/>
                             </div>
@@ -86,9 +88,12 @@ function Rating(props: any) {
             stars.push(1);
         }
         const half = props.rating % 1 !== 0;
-        return (<>{stars.map(() => {
-            return (<FaStar key={Math.random()} color="gold"/>);
-        })}{half && <FaStarHalf color="gold"/>}</>);
+        return (
+            <div>
+                {stars.map(() => <FaStar key={Math.random()} color="gold"/>)}
+                {half && <FaStarHalf color="gold"/>}
+                <span style={{fontSize:'0.75em'}}>({props.reviews})</span>
+            </div>);
     } else {
         return null;
     }

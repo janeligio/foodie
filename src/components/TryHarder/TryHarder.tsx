@@ -1,3 +1,4 @@
+import { BiArrowBack } from 'react-icons/bi';
 
 export default function TryHarder(props: any) {
     const getAllRestaurants = props.getAllRestaurants;
@@ -15,14 +16,16 @@ export default function TryHarder(props: any) {
         return (<p>Something went wrong.</p>);
     }
     return (
+        <>
+        <button className="home-button" style={{padding:'0.5em'}} onClick={() => setView('Home')}><BiArrowBack size="2em"/></button>
         <div className="home try-harder">
             <h1>Foodie</h1>
             <Message/>
-            <button style={{padding: '0.5em'}} className="actions" onClick={() => setView('Home')}>Back</button>
             <div className="actions">
-                <button style={{padding: '0.5em'}} onClick={() => getAllRestaurants(false, true)}>Try Harder</button>
-                <button style={{padding: '0.5em', marginLeft:'0.5em'}} onClick={() => getAllRestaurants(true)}>Explore</button>
+                <button style={{ marginLeft:'0.25em'}} onClick={() => getAllRestaurants(false, true)}>Try Harder</button>
+                <button style={{ marginLeft:'0.25em'}} onClick={() => getAllRestaurants(true)}>Explore</button>
             </div>
         </div>
+        </>
     );
 }

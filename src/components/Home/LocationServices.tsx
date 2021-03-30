@@ -1,3 +1,6 @@
+import { SiCakephp } from 'react-icons/si';
+import { IoFastFoodSharp } from 'react-icons/io5';
+
 export default function LocationServices(props: any) {
     const address = props.address;
     const setAddress = props.setAddress;
@@ -19,12 +22,14 @@ export default function LocationServices(props: any) {
                     className={`${isDisabled&&'not-'}disabled-button`} 
                     disabled={isDisabled}
                     onClick={() => getAllRestaurants(false, false, 'meal')}>
+                        <IoFastFoodSharp style={{marginRight:'0.25em'}}/>
                         Meals
                 </button>
                 <button 
                     className={`${isDisabled&&'not-'}disabled-button`} 
                     disabled={isDisabled}
                     style={{marginLeft:'0.25em'}} onClick={() => getAllRestaurants(false, false, 'dessert')}>
+                        <SiCakephp style={{marginRight:'0.25em'}}/>
                         Desserts
                 </button>
             </div>

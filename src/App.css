@@ -34,7 +34,6 @@ button {
 }
 button:hover, button:focus {
   cursor: pointer;
-
   background-color: #7ea3d5;
 }
 .home > button {
@@ -59,11 +58,13 @@ button[disabled=disabled], button:disabled {
   align-items: center;
 }
 .actions > button {
-  padding: 0.25em 0.5em;
+  padding: 0.75em 1.25em;
+  font-size: 1.25em;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
 .actions.try-harder {
   flex-direction: column;
 }
@@ -73,11 +74,12 @@ button[disabled=disabled], button:disabled {
 }
 .restaurant-container {
   background-color: #282c34;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 5em;
+  padding-bottom: 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .restaurant {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -184,6 +186,16 @@ a:active {
   padding: 0.5em;
   font-size: 0.75em;
   font-family: 'Lato', sans-serif;
+}
+
+.home-button { 
+  display: flex;
+  background-color: inherit;
+  position: absolute;
+  border-radius: 50%;
+  padding: 0.25em;
+  top: 3vh;
+  left: 10px;
 }
 
 .bordered {
